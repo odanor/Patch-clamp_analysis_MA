@@ -73,7 +73,7 @@ legend('Median across cells','Location','northeast','Box','off')
 ylim([-20 200])
 yticks([0 50 100 150 200])
 xlim([0.95 2.05])
-xticks([1 1.25 1.5 1.75 2])
+xticks([1 1.25 1.5 1.75 2]) 
 xticklabels({sprintf('Kv2.1'),sprintf('Kv8.2'),sprintf('Kv2.1/Kv8.2'),sprintf('       Kv2.1/ \\newline   Kv8.2/Cry4'), sprintf('Control')})
 ax = gca;
 ax.XTickLabelRotation = 0;
@@ -228,7 +228,7 @@ ylim([-100 900])
 yticks([0 200 400 600 800])
 xlim([0.95 2.05])
 xticks([1 1.25 1.5 1.75 2])
-xticklabels({sprintf('Kv2.1'),sprintf('Kv8.2'),sprintf('Kv2.1 + Kv8.2'),sprintf('       Kv2.1 + \\newline   Kv8.2 + Cry4'), sprintf('Control')})
+xticklabels({sprintf('Kv2.1'),sprintf('Kv8.2'),sprintf('Kv2.1/Kv8.2'),sprintf('       Kv2.1/ \\newline   Kv8.2/Cry4'), sprintf('Control')})
 ax = gca;
 ax.XTickLabelRotation = 0;
 ax.FontSize = 14; 
@@ -445,7 +445,7 @@ ylim([3 45])
 yticks([10 20 30 40])
 xlim([0.95 2.05])
 xticks([1 1.25 1.5 1.75 2])
-xticklabels({sprintf('Kv2.1'),sprintf('Kv8.2'),sprintf('Kv2.1/Kv8.2'),sprintf('       Kv2.1/ \\newline   Kv8.2/CRY4'), sprintf('Control')})
+xticklabels({sprintf('Kv2.1'),sprintf('Kv8.2'),sprintf('Kv2.1/Kv8.2'),sprintf('       Kv2.1/ \\newline   Kv8.2/Cry4'), sprintf('Control')})
 ax = gca;
 ax.XTickLabelRotation = 0;
 ax.FontSize = 13; 
@@ -718,7 +718,7 @@ yticks([5 10 15 20 25])
 
 xlim([0.95 2.05])
 xticks([1 1.25 1.5 1.75 2])
-xticklabels({sprintf('Kv2.1'),sprintf('Kv8.2'),sprintf('Kv2.1/Kv8.2'),sprintf('       Kv2.1/ \\newline   Kv8.2/CRY4'), sprintf('Control')})
+xticklabels({sprintf('Kv2.1'),sprintf('Kv8.2'),sprintf('Kv2.1/Kv8.2'),sprintf('       Kv2.1/ \\newline   Kv8.2/Cry4'), sprintf('Control')})
 ax = gca;
 ax.XTickLabelRotation = 0;
 ax.FontSize = 14; 
@@ -768,7 +768,7 @@ yticks([5 10 15 20 25])
 
 xlim([0.95 2.05])
 xticks([1 1.25 1.5 1.75 2])
-xticklabels({sprintf('Kv2.1'),sprintf('Kv8.2'),sprintf('Kv2.1/Kv8.2'),sprintf('       Kv2.1/ \\newline   Kv8.2/CRY4'), sprintf('Control')})
+xticklabels({sprintf('Kv2.1'),sprintf('Kv8.2'),sprintf('Kv2.1/Kv8.2'),sprintf('       Kv2.1/ \\newline   Kv8.2/Cry4'), sprintf('Control')})
 ax = gca;
 ax.XTickLabelRotation = 0;
 ax.FontSize = 14; 
@@ -786,8 +786,11 @@ text(2,1.9,'n = 8','HorizontalAlignment','center','FontSize',14)
 title('{\fontsize{20}B}')
 %title('voltage dependence of activation peak C5')
 
-leg = legend('Median sensitivity across cells','Location','northeast','Orientation', 'Horizontal');                                     
+leg = legend('Median sensitivity across cells','Location','northeast','Orientation', 'Horizontal','Box','off');                                     
 fontsize(leg,15,'points') % increase fontsize
+
+% save: 
+% exportgraphics(tiled,'C5_slope_transfected.pdf','ContentType','vector')
 
 
 %% slope of -40 (C6), -30 (A3), -20 mV (C8) holding potential
@@ -896,8 +899,9 @@ line = 1.25:0.05:1.75;
 y_line = [64 64 64 64 64 64 64 64 64 64 64];
 
 plot(line,y_line,'Color','k','LineWidth',1,'HandleVisibility','off')
-plot(1.5,66,'*','Color','k','LineWidth',1,'HandleVisibility','off','MarkerSize',8)
-ylabel('\tau [ms]','FontSize',14) 
+plot(1.5,66,'*','Color','k','LineWidth',1,'HandleVisibility','off','MarkerSize',10)
+ylabel('\fontsize{24} \tau\fontsize{14} [ms]') 
+
 %title('\tau_{fast}')
 title('{\fontsize{20}A}')
 
@@ -947,7 +951,7 @@ text(1.75,-415,'n = 10','HorizontalAlignment','center','FontSize',14)
 %title('\tau_{slow}')
 title('{\fontsize{20}B}')
 
-legend('Median \tau across cells','Location','northeast','Box','off');
+legend('\fontsize{14}Median \fontsize{20}\tau \fontsize{14}across cells','Location','northeast','Box','off');
 
 % save:
 % exportgraphics(tiled,'median_tau.pdf','ContentType','vector')
