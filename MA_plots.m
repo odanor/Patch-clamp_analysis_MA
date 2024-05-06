@@ -50,10 +50,13 @@ for sweep = 1:10
     xlim([0 260])
     
     % mark time where the baseline is calculated
-    patch([2 2 22 22],[210 230 230 210],raw_plot_color_code(1,:),'FaceAlpha',0.03,'EdgeColor',raw_plot_color_code(1,:)); 
+    patch([2 2 22 22],[210 230 230 210],raw_plot_color_code(1,:),'FaceAlpha',0.09,'EdgeColor','none'); 
     % mark the peaks
     plot(A2_example_KA_back_pulse_and_timing(sweep,2),A2_example_KA_back_pulse_and_timing(sweep,1),'*','Color',raw_plot_color_code(2,:),'MarkerSize',9,'LineWidth',1);
- 
+     
+    
+    plot(Na_back_pulse_and_timing(sweep,2),Na_back_pulse_and_timing(sweep,1),'*','Color',raw_plot_color_code(3,:),'MarkerSize',9,'LineWidth',1);
+
     hold on
     ylabel('Current [pA]','FontSize',14)
     xlabel('Time [ms]','FontSize',14)
@@ -106,8 +109,8 @@ for sweep = 1:17
     yticks([-100 0 100 200 300 400])
     
     % Marks where the calculations happened
-    patch([2 2 22 22],[73 90 90 73],raw_plot_color_code(1,:),'FaceAlpha',0.02,'EdgeColor',raw_plot_color_code(1,:)); % baseline calculation
-    patch([93 93 123 123],[73 90 90 73],raw_plot_color_code(2,:),'FaceAlpha',0.02,'EdgeColor',raw_plot_color_code(2,:)); % mean current calculation
+    patch([2 2 22 22],[73 90 90 73],raw_plot_color_code(1,:),'FaceAlpha',0.09,'EdgeColor','none'); % baseline calculation
+    patch([93 93 123 123],[73 90 90 73],raw_plot_color_code(2,:),'FaceAlpha',0.09,'EdgeColor','none'); % mean current calculation
 
     hold on
     ylabel('Current [pA]','FontSize',14)
@@ -122,7 +125,7 @@ ax.LineWidth= 1.25; %change to the desired value
 ax.TitleHorizontalAlignment = 'left'; % Alignment of the title for the first tile
 ax.TickLength = [0.025, 0.025];
 
-title('{\fontsize{20}A}') % Title of first tile 
+title('{\fontsize{25}A}') % Title of first tile 
 
 b = nexttile; % second tile
 for sweep = 1:17
@@ -132,8 +135,8 @@ for sweep = 1:17
     yticks([-100 0 100 200 300 400]) % set y-axis ticks
 
     % Marks where the calculations happened
-    patch([2 2 22 22],[73 90 90 73],raw_plot_color_code(1,:),'FaceAlpha',0.02,'EdgeColor',raw_plot_color_code(1,:)); % baseline calculation
-    patch([93 93 123 123],[73 90 90 73],raw_plot_color_code(2,:),'FaceAlpha',0.02,'EdgeColor',raw_plot_color_code(2,:)); % mean current calculation 
+    patch([2 2 22 22],[73 90 90 73],raw_plot_color_code(1,:),'FaceAlpha',0.09,'EdgeColor','none'); % baseline calculation
+    patch([93 93 123 123],[73 90 90 73],raw_plot_color_code(2,:),'FaceAlpha',0.09,'EdgeColor','none'); % mean current calculation 
     
     hold on
     xlabel('Time [ms]','FontSize',14)
@@ -148,7 +151,7 @@ end
    ax.TickLength = [0.025, 0.025];
 
 
-   title('{\fontsize{20}B}') % Title of second tile 
+   title('{\fontsize{25}B}') % Title of second tile 
 
 
 c = nexttile;
@@ -158,8 +161,8 @@ for sweep = 1:17
     yticks([-100 0 100 200 300 400])
   
     % Marks where the calculations happened
-    patch([2 2 22 22],[73 90 90 73],raw_plot_color_code(1,:),'FaceAlpha',0.02,'EdgeColor',raw_plot_color_code(1,:)); % baseline calculation 
-    patch([93 93 123 123],[73 90 90 73],raw_plot_color_code(2,:),'FaceAlpha',0.02,'EdgeColor',raw_plot_color_code(2,:)); % mean current calculation
+    patch([2 2 22 22],[73 90 90 73],raw_plot_color_code(1,:),'FaceAlpha',0.09,'EdgeColor','none'); % baseline calculation 
+    patch([93 93 123 123],[73 90 90 73],raw_plot_color_code(2,:),'FaceAlpha',0.09,'EdgeColor','none'); % mean current calculation
     
     hold on
     xlabel('Time [ms]','FontSize',14)
@@ -174,7 +177,7 @@ end
     ax.TitleHorizontalAlignment = 'left'; % Alignment of the title for the third tile
     ax.TickLength = [0.025, 0.025];
 
-    title('{\fontsize{20}C}') % Title of third tile  
+    title('{\fontsize{25}C}') % Title of third tile  
 
 
 % focus and hold back to the first tile   
@@ -266,8 +269,8 @@ for sweep = 1:17
 
     yticks([-400 0 400 800 1200])
     
-    patch([2 2 22 22],[270 320 320 270],raw_plot_color_code(1,:),'FaceAlpha',0.02,'EdgeColor',raw_plot_color_code(1,:)); % mark baseline calculation
-    patch([93 93 123 123],[270 320 320 270],raw_plot_color_code(2,:),'FaceAlpha',0.02,'EdgeColor',raw_plot_color_code(2,:)); % mark mean current calculation
+    patch([2 2 22 22],[270 320 320 270],raw_plot_color_code(1,:),'FaceAlpha',0.09,'EdgeColor','none'); % mark baseline calculation
+    patch([93 93 123 123],[270 320 320 270],raw_plot_color_code(2,:),'FaceAlpha',0.09,'EdgeColor','none'); % mark mean current calculation
 
     plot(KA_front_pulse_and_timing(sweep,2),KA_front_pulse_and_timing(sweep,1),'*','Color',raw_plot_color_code(2,:),'MarkerSize',9,'LineWidth',1); % mark A-type current peak calculation
 
@@ -300,14 +303,13 @@ for sweep = 1:17
     xticks([200 600 1000])
 
     % mark time where the baseline is calculated
-    patch([2 2 22 22],[270 320 320 270],raw_plot_color_code(1,:),'FaceAlpha',0.02,'EdgeColor',raw_plot_color_code(1,:)); % mark baseline calculation
-    patch([1000 1000 700 700],[270 320 320 270],raw_plot_color_code(2,:),'FaceAlpha',0.02,'EdgeColor',raw_plot_color_code(2,:)); % mark mean current calculation
+    patch([2 2 22 22],[270 320 320 270],raw_plot_color_code(1,:),'FaceAlpha',0.09,'EdgeColor','none'); % mark baseline calculation
+    patch([1000 1000 700 700],[270 320 320 270],raw_plot_color_code(2,:),'FaceAlpha',0.09,'EdgeColor','none'); % mark mean current calculation
    
     % mark the peaks
     plot(C7_example_KA_back_pulse_and_timing(sweep,2),C7_example_KA_back_pulse_and_timing(sweep,1),'*','Color',raw_plot_color_code(2,:),'MarkerSize',9,'LineWidth',1); % mark A-type current peak calculation
  
     hold on
-    ylabel('Current [pA]','FontSize',14)
     xlabel('Time [ms]','FontSize',14)
     
     box off
@@ -412,7 +414,7 @@ for sweep = 1:17
     ax.LineWidth= 1; %change to the desired value     
     ax.TitleHorizontalAlignment = 'left';  % Figure title left orientated
     ax.TickLength = [0.025, 0.025];
-    title('{\fontsize{20}B } - Kv8.2')
+    title('{\fontsize{20}B} - Kv8.2')
 end
 
 hold off
@@ -592,7 +594,7 @@ ax.LineWidth= 1; %change to the desired value
 ax.Position = [0.13,0.149643705463183,0.789064748201439,0.774346793349169];
 
 xlabel('Time [ms]','FontSize',15)
-ylabel('I [pA]','FontSize',15)
+ylabel('Current [pA]','FontSize',15)
 legend('','Double exponential fit','Location','northwest','Orientation', 'Horizontal','Box','off')
 
 % save:
@@ -619,7 +621,7 @@ ax.LineWidth= 1; %change to the desired value
 ax.Position = [0.13,0.149643705463183,0.789064748201439,0.774346793349169];
 
 xlabel('Time [ms]','FontSize',15)
-ylabel('I [pA]','FontSize',15)
+ylabel('Current [pA]','FontSize',15)
 
 xticks([0 50 100 150])
 
@@ -650,7 +652,8 @@ figure
 hold on
 box off
 
-% plot all V50 values with their corresponding slope value 
+% plot all V50 values with
+% their corresponding slope value 
 % colors depends on the condition 
 plot(KCNB1_slope,KCNB1_V50,'*','Color',new_color_code(1,:),'MarkerSize',10,'LineWidth',1)
 plot(KCNV2_slope,KCNV2_V50,'*','Color',new_color_code(2,:),'MarkerSize',10,'LineWidth',1)
