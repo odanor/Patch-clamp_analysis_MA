@@ -95,7 +95,57 @@ ylabel('Current [pA]/10pF capacitance of cell membrane','FontSize',14)
 % ax = gca;
 % exportgraphics(ax,'A3_current_size.pdf','ContentType','vector')
 
-%% Current amplitude, ransfected conditions, -80 mV holding potential peak IA showing outlier
+%% Current amplitude, ransfected conditions, -30 mV holding potential without Cry4
+
+cd '/Users/oda/Desktop/Uni/Master/MA/Daten/Matlabscrips'
+
+% store the current amplitude at +30 mV for each cell into seperate variables
+KCNB1 = KCNB1_A3_struct.mean_currents_normalized(14,:);
+KCNV2 = KCNV2_A3_struct.mean_currents_normalized(14,:);
+KCNB1_KCNV2 = KCNB1_KCNV2_A3_struct.mean_currents_normalized(14,:);
+Control = A3_pretest_struct_mean.mean_currents_normalized(14,:);
+
+figure
+box off
+hold on
+
+
+% transparent_errorbar_fig(cells,Cell_color_code,Cell_color_code_transparent,num_cond,mode,handle_visibility_legend,handle_visibility_dots)
+
+% run function to create transparent IQR and create plot
+transparent_errorbar_fig(KCNB1,new_color_code(1,:),new_color_code_transparent(1,:),1,2,0,0)
+transparent_errorbar_fig(KCNV2,new_color_code(2,:),new_color_code_transparent(2,:),1.25,2,0,0)
+transparent_errorbar_fig(KCNB1_KCNV2,new_color_code(3,:),new_color_code_transparent(3,:),1.5,2,0,0)
+transparent_errorbar_fig(Control,new_color_code(5,:),new_color_code_transparent(5,:),1.75,2,1,0)
+
+legend('Median across cells','Location','northwest','Box','off')
+
+% set axis properties
+ylim([-20 200])
+yticks([0 50 100 150 200])
+xlim([0.95 1.8])
+xticks([1 1.25 1.5 1.75 2]) 
+xticklabels({sprintf('Kv2.1'),sprintf('Kv8.2'),sprintf('Kv2.1/Kv8.2'), sprintf('Control')})
+ax = gca;
+ax.XTickLabelRotation = 0;
+ax.FontSize = 14; 
+ax.LineWidth= 1;      
+ax.Position = [0.13,0.149643705463183,0.789064748201439,0.774346793349169];
+
+% include text under x-axis lables with sample size 
+text(1,-55,'n = 5','HorizontalAlignment','center','FontSize',14)
+text(1.25,-55,'n = 4','HorizontalAlignment','center','FontSize',14)
+text(1.5,-55,'n = 6','HorizontalAlignment','center','FontSize',14)
+text(1.75,-55,'n = 5','HorizontalAlignment','center','FontSize',14)
+
+
+ylabel('Current [pA]/10pF capacitance of cell membrane','FontSize',14)
+
+% save:
+% ax = gca;
+% exportgraphics(ax,'A3_current_size_without_Cry4.pdf','ContentType','vector')
+
+%% Current amplitude, transfected conditions, -80 mV holding potential peak IA showing outlier
 
 cd '/Users/oda/Desktop/Uni/Master/MA/Daten/Matlabscrips'
 
@@ -198,7 +248,7 @@ text(1.5,-220,'n = 4','HorizontalAlignment','center','FontSize',14)
 text(1.75,-220,'n = 4','HorizontalAlignment','center','FontSize',14)
 text(2,-220,'n = 8','HorizontalAlignment','center','FontSize',14)
 
-title('{\fontsize{20}A}')
+title('{\fontsize{20}A} - I_{A}')
 ylabel('Current [pA]/10pF capacitance of cell membrane','FontSize',14)
 
 
@@ -244,7 +294,7 @@ text(1.75,-220,'n = 4','HorizontalAlignment','center','FontSize',14)
 text(2,-220,'n = 8','HorizontalAlignment','center','FontSize',14)
 
 
-title('{\fontsize{20}B}')
+title('{\fontsize{20}B} - I_{K}')
 legend('Median across cells','Location','northeast','Orientation', 'Horizontal','Box','off');
  % child = gcf;
  % exportgraphics(child,'C5_current_amplitude_transfected.pdf','ContentType','vector')
@@ -259,6 +309,7 @@ A3 = A3_pretest_struct_mean.mean_currents_normalized(14,:);
 C8 = C8_pretest_struct_mean.mean_currents_normalized(14,:);
 
 figure
+
 box off
 hold on
 
@@ -308,7 +359,9 @@ C7_mean = C7_pretest_struct_mean.mean_currents_normalized(14,:);
 C5_peak = C5_pretest_struct_peak.A_peak_front_normalized(14,:);
 C7_peak = C7_pretest_struct_peak.A_peak_front_normalized(14,:);
 
-figure 
+figure('Position',[54,247,1094,486]) 
+tiled = tiledlayout(1,2,'TileSpacing','compact'); % 3x4 tiled layout
+nexttile
 box off
 hold on
 
@@ -321,7 +374,9 @@ transparent_errorbar_fig(C5_mean,new_color_code(6,:),new_color_code_transparent(
 transparent_errorbar_fig(C7_mean,new_color_code(9,:),new_color_code_transparent(9,:),2,2,0,0)
 
 
-legend('Median across cells','Location','northoutside','Position', [0.376785731068527,0.93,0.295535714285714,0.058333333333333],'Box','off')
+%legend('Median across cells','Location','northoutside','Position', [0.376785731068527,0.93,0.295535714285714,0.058333333333333],'Box','off')
+legend('Median across cells','Location','northoutside','Box','off')
+title('{\fontsize{20}A}')
 
 % set axis properties
 ylim([-250 1000])
@@ -334,24 +389,97 @@ ax.XTickLabelRotation = 0;
 ax.FontSize = 14; 
 ax.LineWidth= 1;     
 ax.Position = [0.13,0.149643705463183,0.789064748201439,0.774346793349169];
+ax.TitleHorizontalAlignment = 'left';
 
 % include text under x-axis lables with sample size 
-text(1,-445,'n = 8','HorizontalAlignment','center','FontSize',14)
-text(1.25,-445,'n = 4','HorizontalAlignment','center','FontSize',14)
-text(1.75,-445,'n = 8','HorizontalAlignment','center','FontSize',14)
-text(2,-445,'n = 4','HorizontalAlignment','center','FontSize',14)
+text(1,-410,'n = 8','HorizontalAlignment','center','FontSize',14)
+text(1.25,-410,'n = 4','HorizontalAlignment','center','FontSize',14)
+text(1.75,-410,'n = 8','HorizontalAlignment','center','FontSize',14)
+text(2,-410,'n = 4','HorizontalAlignment','center','FontSize',14)
 
 ylabel('Current [pA]/10pF capacitance of cell membrane','FontSize',14)
 
 % include text which plot includes the peak and which the mean calculated
 % data
-text(1.125,950,'A-type peak','HorizontalAlignment','center','FontSize',16)
-text(1.89,950,'Mean current','HorizontalAlignment','center','FontSize',16)
+text(1.125,920,'I_{A}','HorizontalAlignment','center','FontSize',18)
+text(1.89,920,'I_{K}','HorizontalAlignment','center','FontSize',18)
 
 
 %%% save:
 % ax = gca;
 % exportgraphics(ax,'C5_C7_current_amplitude_bearbeitet.pdf','ContentType','vector')
+
+
+
+%%% V50 all transfections together at -80 mV holding potential with 100 ms (C5) and 1000 ms (C7) stimulation
+
+nexttile
+cd '/Users/oda/Desktop/Uni/Master/MA/Daten/Matlabscrips'
+
+% store the V50 values for each cell into seperate variables
+C5_mean = cell2table(C5_pretest_struct_mean.IV_fits(5,1:size(C5_pretest_struct_mean.IV_fits,2)-2));
+C7_mean = cell2table(C7_pretest_struct_mean.IV_fits(5,1:size(C7_pretest_struct_mean.IV_fits,2)-2));
+
+C5_peak = cell2table(C5_pretest_struct_peak.IV_fits(5,1:size(C5_pretest_struct_peak.IV_fits,2)-2));
+C7_peak = cell2table(C7_pretest_struct_peak.IV_fits(5,1:size(C7_pretest_struct_peak.IV_fits,2)-2));
+
+ 
+box off
+hold on
+
+
+%transparent_errorbar_fig(cells,Cell_color_code,Cell_color_code_transparent,num_cond,mode,handle_visibility_legend,handle_visibility_dots)
+% run function to create transparent IQR and create plot for each
+% condition
+%%% IA peak
+transparent_errorbar_fig(C5_peak,new_color_code(6,:),new_color_code_transparent(6,:),1,2,0,0)
+transparent_errorbar_fig(C7_peak,new_color_code(9,:),new_color_code_transparent(9,:),1.25,2,1,0)
+
+%%% IK mean
+transparent_errorbar_fig(C5_mean,new_color_code(6,:),new_color_code_transparent(6,:),1.75,2,0,0)
+transparent_errorbar_fig(C7_mean,new_color_code(9,:),new_color_code_transparent(9,:),2,2,0,0)
+
+
+%legend('Median V_{50} across cells','Location','northoutside','Position', [0.376785731068527,0.93,0.295535714285714,0.058333333333333],'Box','off')
+legend('Median V_{50} across cells','Location','northoutside','Box','off')
+
+% set axis properties
+ylim([8 40])
+yticks([10 20 30 40])
+xlim([0.8 2.2])
+xticks([1 1.25 1.75 2])
+xticklabels({sprintf(' 100 ms \\newline   pulse'),sprintf(' 1000 ms \\newline    pulse'),sprintf(' 100 ms \\newline   pulse'),sprintf(' 1000 ms \\newline    pulse')})
+ax = gca;
+ax.XTickLabelRotation = 0;
+ax.FontSize = 14; 
+ax.LineWidth= 1;  
+ax.Position = [0.13,0.149643705463183,0.789064748201439,0.774346793349169];
+ax.TitleHorizontalAlignment = 'left';
+
+% include text under x-axis lables with sample size 
+text(1,3.9,'n = 8','HorizontalAlignment','center','FontSize',14)
+text(1.25,3.9,'n = 4','HorizontalAlignment','center','FontSize',14)
+text(1.75,3.9,'n = 8','HorizontalAlignment','center','FontSize',14)
+text(2,3.9,'n = 4','HorizontalAlignment','center','FontSize',14)
+
+ylabel('Voltage [mV]','FontSize',14)
+
+% include text which plot includes the peak and which the mean calculated
+% data
+text(1.125,38,'I_{A}','HorizontalAlignment','center','FontSize',18)
+text(1.89,38,'I_{K}','HorizontalAlignment','center','FontSize',18)
+title('{\fontsize{20}B}')
+
+
+%%% save:
+% exportgraphics(tiled,'C5_amp_V50_together.pdf','ContentType','vector')
+
+
+
+
+
+
+
 
 %% V50 plots
 
@@ -413,6 +541,55 @@ ylabel('Voltage [mV]','FontSize',14)
 % ax = gca;
 % exportgraphics(ax,'V50_A3.pdf','ContentType','vector')
 
+%% V50 all transfections together at -30 mV holding potential (A3) with control without Cry4
+
+cd '/Users/oda/Desktop/Uni/Master/MA/Daten/Matlabscrips'
+
+% store the V50 values for each cell into seperate variables
+KCNB1 = cell2table(KCNB1_A3_struct.IV_fits(5,1:size(KCNB1_A3_struct.IV_fits,2)-2));
+KCNV2 = cell2table(KCNV2_A3_struct.IV_fits(5,1:size(KCNV2_A3_struct.IV_fits,2)-2));
+KCNB1_KCNV2 = cell2table(KCNB1_KCNV2_A3_struct.IV_fits(5,1:size(KCNB1_KCNV2_A3_struct.IV_fits,2)-2));
+Control = cell2table(A3_pretest_struct_mean.IV_fits(5,1:size(A3_pretest_struct_mean.IV_fits,2)-2));
+
+figure 
+box off
+hold on
+
+%transparent_errorbar_fig(cells,Cell_color_code,Cell_color_code_transparent,num_cond,mode,handle_visibility_legend,handle_visibility_dots)
+% run function to create transparent IQR and create plot for each
+% condition
+
+transparent_errorbar_fig(KCNB1,new_color_code(1,:),new_color_code_transparent(1,:),1,2,0,0)
+transparent_errorbar_fig(KCNV2,new_color_code(2,:),new_color_code_transparent(2,:),1.25,2,0,0)
+transparent_errorbar_fig(KCNB1_KCNV2,new_color_code(3,:),new_color_code_transparent(3,:),1.5,2,0,0)
+transparent_errorbar_fig(Control,new_color_code(5,:),new_color_code_transparent(5,:),1.75,2,1,0)
+
+legend('Median V_{50} across cells','Location','northwest','Box','off')
+
+% set axis properties
+ylim([0 60])
+xlim([0.95 1.8])
+xticks([1 1.25 1.5 1.75 2])
+xticklabels({sprintf('Kv2.1'),sprintf('Kv8.2'),sprintf('Kv2.1/Kv8.2'), sprintf('Control')})
+ax = gca;
+ax.XTickLabelRotation = 0;
+ax.FontSize = 14; 
+ax.LineWidth= 1; %change to the desired value     
+ax.Position = [0.13,0.149643705463183,0.789064748201439,0.774346793349169];
+
+% include text under x-axis lables with sample size 
+text(1,-9,'n = 5','HorizontalAlignment','center','FontSize',14)
+text(1.25,-9,'n = 4','HorizontalAlignment','center','FontSize',14)
+text(1.5,-9,'n = 6','HorizontalAlignment','center','FontSize',14)
+text(1.75,-9,'n = 5','HorizontalAlignment','center','FontSize',14)
+
+ylabel('Voltage [mV]','FontSize',14)
+
+%%% save:
+% ax = gca;
+% exportgraphics(ax,'V50_A3_without_Cry4.pdf','ContentType','vector')
+
+
 %% V50 all transfections together at -80 mV holding potential (C5) with control 
 
 cd '/Users/oda/Desktop/Uni/Master/MA/Daten/Matlabscrips'
@@ -459,7 +636,7 @@ text(1.25,-1.7,'n = 4','HorizontalAlignment','center','FontSize',14)
 text(1.5,-1.7,'n = 4','HorizontalAlignment','center','FontSize',14)
 text(1.75,-1.7,'n = 4','HorizontalAlignment','center','FontSize',14)
 text(2,-1.7,'n = 8','HorizontalAlignment','center','FontSize',14)
-title('{\fontsize{20}A}')
+title('{\fontsize{20}A} - I_{A}')
 
 ylabel('Voltage [mV]','FontSize',14)
 
@@ -508,7 +685,7 @@ text(1.25,-1.7,'n = 4','HorizontalAlignment','center','FontSize',14)
 text(1.5,-1.7,'n = 4','HorizontalAlignment','center','FontSize',14)
 text(1.75,-1.7,'n = 4','HorizontalAlignment','center','FontSize',14)
 text(2,-1.7,'n = 8','HorizontalAlignment','center','FontSize',14)
-title('{\fontsize{20}B}')
+title('{\fontsize{20}B} - I_{K}')
 
 
 %%% save
@@ -563,68 +740,6 @@ xlabel('Holding potential [mV]','FontSize',14,'Position',[1.250000256299955,9.5,
 %%% save:
 % ax = gca;
 % exportgraphics(ax,'V50_C6_A3_C8.pdf','ContentType','vector')
-
-
-%% V50 all transfections together at -80 mV holding potential with 100 ms (C5) and 1000 ms (C7) stimulation
-
-
-cd '/Users/oda/Desktop/Uni/Master/MA/Daten/Matlabscrips'
-
-% store the V50 values for each cell into seperate variables
-C5_mean = cell2table(C5_pretest_struct_mean.IV_fits(5,1:size(C5_pretest_struct_mean.IV_fits,2)-2));
-C7_mean = cell2table(C7_pretest_struct_mean.IV_fits(5,1:size(C7_pretest_struct_mean.IV_fits,2)-2));
-
-C5_peak = cell2table(C5_pretest_struct_peak.IV_fits(5,1:size(C5_pretest_struct_peak.IV_fits,2)-2));
-C7_peak = cell2table(C7_pretest_struct_peak.IV_fits(5,1:size(C7_pretest_struct_peak.IV_fits,2)-2));
-
-figure 
-box off
-hold on
-
-
-%transparent_errorbar_fig(cells,Cell_color_code,Cell_color_code_transparent,num_cond,mode,handle_visibility_legend,handle_visibility_dots)
-% run function to create transparent IQR and create plot for each
-% condition
-%%% IA peak
-transparent_errorbar_fig(C5_peak,new_color_code(6,:),new_color_code_transparent(6,:),1,2,0,0)
-transparent_errorbar_fig(C7_peak,new_color_code(9,:),new_color_code_transparent(9,:),1.25,2,1,0)
-
-%%% IK mean
-transparent_errorbar_fig(C5_mean,new_color_code(6,:),new_color_code_transparent(6,:),1.75,2,0,0)
-transparent_errorbar_fig(C7_mean,new_color_code(9,:),new_color_code_transparent(9,:),2,2,0,0)
-
-
-legend('Median V_{50} across cells','Location','northoutside','Position', [0.376785731068527,0.93,0.295535714285714,0.058333333333333],'Box','off')
-
-% set axis properties
-ylim([8 40])
-yticks([10 20 30 40])
-xlim([0.8 2.2])
-xticks([1 1.25 1.75 2])
-xticklabels({sprintf(' 100 ms \\newline   pulse'),sprintf(' 1000 ms \\newline    pulse'),sprintf(' 100 ms \\newline    pulse'),sprintf(' 1000 ms \\newline    pulse')})
-ax = gca;
-ax.XTickLabelRotation = 0;
-ax.FontSize = 14; 
-ax.LineWidth= 1;  
-ax.Position = [0.13,0.149643705463183,0.789064748201439,0.774346793349169];
-
-% include text under x-axis lables with sample size 
-text(1,3,'n = 8','HorizontalAlignment','center','FontSize',14)
-text(1.25,3,'n = 4','HorizontalAlignment','center','FontSize',14)
-text(1.75,3,'n = 8','HorizontalAlignment','center','FontSize',14)
-text(2,3,'n = 4','HorizontalAlignment','center','FontSize',14)
-
-ylabel('Voltage [mV]','FontSize',14)
-
-% include text which plot includes the peak and which the mean calculated
-% data
-text(1.125,39.3,'A-type peak','HorizontalAlignment','center','FontSize',16)
-text(1.89,39.3,'Mean current','HorizontalAlignment','center','FontSize',16)
-
-
-%%% save:
-% ax = gca;
-% exportgraphics(ax,'C5_C7_V50_bearbeitet.pdf','ContentType','vector')
 
 
 %% slope k
@@ -682,6 +797,57 @@ ylabel('Voltage sensitivity per e-fold increase [mV]','FontSize',14) % voltage d
 % ax = gca;
 % exportgraphics(ax,'slope_A3.pdf','ContentType','vector')
 
+%% slope, transfected conditions, -30 mV holding potential (A3) without Cry4
+
+cd '/Users/oda/Desktop/Uni/Master/MA/Daten/Matlabscrips'
+
+% store the V50 values for each cell into seperate variables
+KCNB1 = cell2table(KCNB1_A3_struct.IV_fits(6,1:size(KCNB1_A3_struct.IV_fits,2)-2));
+KCNV2 = cell2table(KCNV2_A3_struct.IV_fits(6,1:size(KCNV2_A3_struct.IV_fits,2)-2));
+KCNB1_KCNV2 = cell2table(KCNB1_KCNV2_A3_struct.IV_fits(6,1:size(KCNB1_KCNV2_A3_struct.IV_fits,2)-2));
+Control = cell2table(A3_pretest_struct_mean.IV_fits(6,1:size(A3_pretest_struct_mean.IV_fits,2)-2));
+
+figure 
+box off
+hold on
+
+
+%transparent_errorbar_fig(cells,Cell_color_code,Cell_color_code_transparent,num_cond,mode,handle_visibility_legend,handle_visibility_dots)
+% run function to create transparent IQR and create plot for each
+% condition
+transparent_errorbar_fig(KCNB1,new_color_code(1,:),new_color_code_transparent(1,:),1,2,0,0)
+transparent_errorbar_fig(KCNV2,new_color_code(2,:),new_color_code_transparent(2,:),1.25,2,0,0)
+transparent_errorbar_fig(KCNB1_KCNV2,new_color_code(3,:),new_color_code_transparent(3,:),1.5,2,0,0)
+transparent_errorbar_fig(Control,new_color_code(5,:),new_color_code_transparent(5,:),1.75,2,1,0)
+
+legend('Median sensitivity across cells','Location','northeast','Box','off');
+
+% set axis properties
+ylim([-0.8 20])
+yticks([0 5 10 15 20])
+
+xlim([0.95 1.8])
+xticks([1 1.25 1.5 1.75 2])
+xticklabels({sprintf('Kv2.1'),sprintf('Kv8.2'),sprintf('Kv2.1/Kv8.2'), sprintf('Control')})
+ax = gca;
+ax.XTickLabelRotation = 0;
+ax.FontSize = 14; 
+ax.LineWidth= 1;     
+ax.Position = [0.13,0.149643705463183,0.789064748201439,0.774346793349169];
+
+% include text under x-axis lables with sample size 
+text(1,-4,'n = 5','HorizontalAlignment','center','FontSize',14)
+text(1.25,-4,'n = 4','HorizontalAlignment','center','FontSize',14)
+text(1.5,-4,'n = 6','HorizontalAlignment','center','FontSize',14)
+text(1.75,-4,'n = 5','HorizontalAlignment','center','FontSize',14)
+
+% axis labels
+ylabel('Voltage sensitivity per e-fold increase [mV]','FontSize',14) % voltage dependence of activation
+
+% save: 
+% ax = gca;
+% exportgraphics(ax,'slope_A3_without_Cry4.pdf','ContentType','vector')
+
 
 %% slope, transfected conditions, -80 mV holding potential (C5) 
 
@@ -737,7 +903,7 @@ text(2,1.9,'n = 8','HorizontalAlignment','center','FontSize',14)
 ylabel('Voltage sensitivity per e-fold increase [mV]','FontSize',14) % voltage dependence of activation
 %title('voltage dependence of activation mean C5')
 
-title('{\fontsize{20}A}')
+title('{\fontsize{20}A} - I_{A}')
 
 %%%%%
 
@@ -783,7 +949,7 @@ text(1.5,1.9,'n = 4','HorizontalAlignment','center','FontSize',14)
 text(1.75,1.9,'n = 4','HorizontalAlignment','center','FontSize',14)
 text(2,1.9,'n = 8','HorizontalAlignment','center','FontSize',14)
 
-title('{\fontsize{20}B}')
+title('{\fontsize{20}B} - I_{K}')
 %title('voltage dependence of activation peak C5')
 
 leg = legend('Median sensitivity across cells','Location','northeast','Orientation', 'Horizontal','Box','off');                                     
@@ -903,7 +1069,7 @@ plot(1.5,66,'*','Color','k','LineWidth',1,'HandleVisibility','off','MarkerSize',
 ylabel('\fontsize{24} \tau\fontsize{14} [ms]') 
 
 %title('\tau_{fast}')
-title('{\fontsize{20}A}')
+title('{\fontsize{20}A} - \tau_{fast}')
 
 
 %%%%%
@@ -949,9 +1115,113 @@ text(1.75,-415,'n = 10','HorizontalAlignment','center','FontSize',14)
 
 
 %title('\tau_{slow}')
-title('{\fontsize{20}B}')
+title('{\fontsize{20}B} - \tau_{slow}')
 
 legend('\fontsize{14}Median \fontsize{20}\tau \fontsize{14}across cells','Location','northeast','Box','off');
 
 % save:
 % exportgraphics(tiled,'median_tau.pdf','ContentType','vector')
+
+        %% exponential fit --> all transfections together (poster) with control A3 without Cry4
+
+cd '/Users/oda/Desktop/Uni/Master/MA/Daten/Matlabscrips'
+figure('Position',[54,247,1094,486]) % two plots beside each other
+
+tiled = tiledlayout(1,2,'TileSpacing','compact');
+nexttile %%% tau fast
+
+% store the V50 values for each cell into seperate variables
+KCNB1_exp_fast = cell2table(KCNB1_A3_struct.exponential_fit_values(5,1:size(KCNB1_A3_struct.exponential_fit_values,2)));
+KCNV2_exp_fast = cell2table(KCNV2_A3_struct.exponential_fit_values(5,1:size(KCNV2_A3_struct.exponential_fit_values,2)));
+KCNB1_KCNV2_exp_fast = cell2table(KCNB1_KCNV2_A3_struct.exponential_fit_values(5,1:size(KCNB1_KCNV2_A3_struct.exponential_fit_values,2)));
+
+box off
+hold on
+
+% transparent_errorbar_fig(cells,Cell_color_code,Cell_color_code_transparent,num_cond,mode,handle_visibility_legend,handle_visibility_dots)
+% run function to create transparent IQR and create plot for each
+% condition
+transparent_errorbar_fig(KCNB1_exp_fast,new_color_code(1,:),new_color_code_transparent(1,:),1,2,0,0)
+transparent_errorbar_fig(KCNV2_exp_fast,new_color_code(2,:),new_color_code_transparent(2,:),1.25,2,0,0)
+transparent_errorbar_fig(KCNB1_KCNV2_exp_fast,new_color_code(3,:),new_color_code_transparent(3,:),1.5,2,0,0)
+
+
+% set axis properties
+%ylim([-5 75])
+ylim([-5 45])
+xlim([0.95 1.55])
+xticks([1 1.25 1.5 1.75])
+yticks([0 10 20 30 40 50 60])
+
+xticklabels({sprintf('Kv2.1'),sprintf('Kv8.2'),sprintf('Kv2.1/Kv8.2')})
+ax = gca;
+ax.XTickLabelRotation = 0;
+ax.FontSize = 14; 
+ax.LineWidth= 1;     
+ax.Position = [0.13,0.149643705463183,0.789064748201439,0.774346793349169];
+ax.TitleHorizontalAlignment = 'left'; % align plot title left
+
+
+% include text under x-axis lables with sample size 
+text(1,-14.5,'n = 5','HorizontalAlignment','center','FontSize',14)
+text(1.25,-14.5,'n = 4','HorizontalAlignment','center','FontSize',14)
+text(1.5,-14.5,'n = 6','HorizontalAlignment','center','FontSize',14)
+
+% include text under x-axis lables with sample size for new scale
+text(1,-11,'n = 5','HorizontalAlignment','center','FontSize',14)
+text(1.25,-11,'n = 4','HorizontalAlignment','center','FontSize',14)
+text(1.5,-11,'n = 6','HorizontalAlignment','center','FontSize',14)
+
+ylabel('\fontsize{24} \tau\fontsize{14} [ms]') 
+
+%title('\tau_{fast}')
+title('{\fontsize{20}A} - \tau_{fast}')
+
+
+%%%%%
+
+% store the V50 values for each cell into seperate variables
+KCNB1_exp = cell2table(KCNB1_A3_struct.exponential_fit_values(4,1:size(KCNB1_A3_struct.exponential_fit_values,2)));
+KCNV2_exp = cell2table(KCNV2_A3_struct.exponential_fit_values(4,1:size(KCNV2_A3_struct.exponential_fit_values,2)));
+KCNB1_KCNV2_exp = cell2table(KCNB1_KCNV2_A3_struct.exponential_fit_values(4,1:size(KCNB1_KCNV2_A3_struct.exponential_fit_values,2)));
+
+
+nexttile %%% tau slow
+box off
+hold on
+
+% transparent_errorbar_fig(cells,Cell_color_code,Cell_color_code_transparent,num_cond,mode,handle_visibility_legend,handle_visibility_dots)
+% run function to create transparent IQR and create plot for each
+% condition
+transparent_errorbar_fig(KCNB1_exp,new_color_code(1,:),new_color_code_transparent(1,:),1,2,0,0)
+transparent_errorbar_fig(KCNV2_exp,new_color_code(2,:),new_color_code_transparent(2,:),1.25,2,0,0)
+transparent_errorbar_fig(KCNB1_KCNV2_exp,new_color_code(3,:),new_color_code_transparent(3,:),1.5,2,1,0)
+
+% set axis properties
+ylim([-100 2600])
+
+xlim([0.95 1.55])
+xticks([1 1.25 1.5 1.75])
+xticklabels({sprintf('Kv2.1'),sprintf('Kv8.2'),sprintf('Kv2.1/Kv8.2')})
+ax = gca;
+ax.XTickLabelRotation = 0;
+ax.FontSize = 14; 
+ax.LineWidth= 1; 
+ax.Position = [0.13,0.149643705463183,0.789064748201439,0.774346793349169];
+ax.TitleHorizontalAlignment = 'left'; % align plot title left
+
+
+% include text under x-axis lables with sample size 
+text(1,-415,'n = 5','HorizontalAlignment','center','FontSize',14)
+text(1.25,-415,'n = 4','HorizontalAlignment','center','FontSize',14)
+text(1.5,-415,'n = 6','HorizontalAlignment','center','FontSize',14)
+text(1.75,-415,'n = 10','HorizontalAlignment','center','FontSize',14)
+
+
+%title('\tau_{slow}')
+title('{\fontsize{20}B} - \tau_{slow}')
+
+legend('\fontsize{14}Median \fontsize{20}\tau \fontsize{14}across cells','Location','northeast','Box','off');
+
+% save:
+% exportgraphics(tiled,'median_tau_without_Cry4_newscale.pdf','ContentType','vector')

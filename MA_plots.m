@@ -39,6 +39,222 @@
 %%%
 %%%
 
+%% IK, INa, IA example plots
+
+
+figure('Position',[440,348,694,350])
+tiled = tiledlayout(1,2,'TileSpacing','compact'); % tile plot
+
+
+nexttile; % first tile
+hold on
+
+    
+    for sweep = 1:17 
+        hold on
+        plot(t_2,C5_pretest_recordings_filtered(:,sweep),'Color','k') % plot stimulus protocolm in inset 
+    end     
+    hold off
+
+    
+    ylim([-700 1200])
+    %xlim([-10 160])
+
+    yticks([-500 0 500 1000])
+
+    ax = gca; % get properties for current axles
+    ax.FontSize = 14; 
+    ax.LineWidth= 1.25; %change to the desired value     
+    ax.TickLength = [0.02, 0.025];
+    ylabel('Current [pA]','FontSize',14)
+    xlabel('Time [ms]','FontSize',14)
+
+    ax.TitleHorizontalAlignment = 'left';
+    title('{\fontsize{20}A}')
+
+
+
+nexttile; % first tile
+hold on
+
+    
+    for sweep = 1:17 
+        hold on
+        plot(t,KCNB1_recordings_filtered(:,sweep),'Color','k') % plot stimulus protocolm in inset 
+    end     
+    hold off
+
+    yticks([-200 0 200 400])
+    ylim([-250 400])
+%    xlim([-10 160])
+    
+    xlabel('Time [ms]','FontSize',14)
+    ax = gca; % get properties for current axles
+    ax.FontSize = 14; 
+    ax.LineWidth= 1.25; %change to the desired value     
+    ax.TickLength = [0.02, 0.02];
+
+    ax.TitleHorizontalAlignment = 'left';
+    
+    title('{\fontsize{20}B}')
+
+
+% exportgraphics(tiled,'IA_INa_IK_bsp.pdf','ContentType','vector')
+
+%% Stimulus protocols
+    
+figure('Position',[440,348,694,350])
+tiled = tiledlayout(2,3,'TileSpacing','compact'); % tile plot into three
+nexttile; % first tile
+hold on
+
+    %%% -80 mV short
+    
+    for sweep = 1:17 
+        hold on
+        plot(t,C5_stim(:,sweep),'Color','k') % plot stimulus protocolm in inset 
+    end     
+    hold off
+    
+    ylim([-115 70])
+    xlim([-10 160])
+    
+    ax = gca; % get properties for current axles
+    ax.FontSize = 14; 
+    ax.LineWidth= 1.25; %change to the desired value     
+    ax.TickLength = [0.03, 0.025];
+    ylabel('Voltage [mV]','FontSize',14)
+
+    ax.TitleHorizontalAlignment = 'left';
+    title('{\fontsize{20}A}')
+
+    %%% -80 mV long
+    
+  nexttile;    
+    for sweep = 1:17 
+        hold on
+        plot(t_C7,C7_stim(:,sweep),'Color','k') % plot stimulus protocolm in inset 
+    end 
+    hold off
+
+    ylim([-115 70])
+    xlim([-80 1200])
+    
+    ax = gca; % get properties for current axles
+    ax.FontSize = 14; 
+    ax.LineWidth= 1.25; %change to the desired value     
+  
+    ax = gca; % get properties for current axles
+    ax.FontSize = 14; 
+    ax.LineWidth= 1.25; %change to the desired value     
+    ax.TickLength = [0.03, 0.025];
+
+    ax.TitleHorizontalAlignment = 'left';
+    title('{\fontsize{20}B}')
+
+    %%% inactivation
+  nexttile;    
+    for sweep = 1:10 
+        hold on
+        plot(t_A2,A2_stim(:,sweep),'Color','k') % plot stimulus protocolm in inset 
+    end 
+    hold off
+    
+    ylim([-115 70])
+    xlim([-15 270])
+
+    
+    ax = gca; % get properties for current axles
+    ax.FontSize = 14; 
+    ax.LineWidth= 1.25; %change to the desired value     
+  
+    ax = gca; % get properties for current axles
+    ax.FontSize = 14; 
+    ax.LineWidth= 1.25; %change to the desired value     
+    ax.TickLength = [0.03, 0.025];
+
+    ax.TitleHorizontalAlignment = 'left';
+    title('{\fontsize{20}C}')
+
+    %%% -40 mV short
+ nexttile; 
+    for sweep = 1:17
+    hold on
+    plot(t,C6_stim(:,sweep),'Color','k') % plot stimulus protocolm in inset 
+    end 
+    hold off
+    
+    ylim([-115 70])
+    xlim([-10 160])
+
+    
+    ax = gca; % get properties for current axles
+    ax.FontSize = 14; 
+    ax.LineWidth= 1.25; %change to the desired value     
+    xlabel('Time [ms]','FontSize',14)
+    ylabel('Voltage [mV]','FontSize',14)
+    ax.TickLength = [0.03, 0.025];
+
+    ax.TitleHorizontalAlignment = 'left';
+    title('{\fontsize{20}D}')
+ 
+
+    %%% -30 mV short
+   nexttile;   
+    for sweep = 1:17 
+        hold on
+        plot(t,stim_30mV(:,sweep),'Color','k') % plot stimulus protocolm in inset 
+    end 
+    hold off
+    
+    ylim([-115 70])
+    xlim([-10 160])
+
+    
+    ax = gca; % get properties for current axles
+    ax.FontSize = 14; 
+    ax.LineWidth= 1.25; %change to the desired value     
+    xlabel('Time [ms]','FontSize',14)
+
+  
+    ax = gca; % get properties for current axles
+    ax.FontSize = 14; 
+    ax.LineWidth= 1.25; %change to the desired value     
+    ax.TickLength = [0.03, 0.025];
+
+    ax.TitleHorizontalAlignment = 'left';
+    title('{\fontsize{20}E}')
+
+    %%% -20 mV short
+    nexttile;  
+    for sweep = 1:17 
+        hold on
+        plot(t,C8_stim(:,sweep),'Color','k') % plot stimulus protocolm in inset 
+    end 
+    hold off
+
+    ylim([-115 70])
+    xlim([-10 160])
+
+    ax = gca; % get properties for current axles
+    ax.FontSize = 14; 
+    ax.LineWidth= 1.25; %change to the desired value     
+
+    xlabel('Time [ms]','FontSize',14)
+  
+    ax = gca; % get properties for current axles
+    ax.FontSize = 14; 
+    ax.LineWidth= 1.25; %change to the desired value     
+    ax.TickLength = [0.03, 0.025];
+
+    ax.TitleHorizontalAlignment = 'left';
+    title('{\fontsize{20}F}')
+
+
+
+% exportgraphics(tiled,'stimulus_protocols_new.pdf','ContentType','vector')
+
+
 %% Raw data plots
 %%% Inactivation protocol (A2) example
 
@@ -463,6 +679,75 @@ end
 % save:
  % exportgraphics(tiled,'A3_transfected_cond.pdf','ContentType','vector')
 
+
+%% Examplarly raw currents from all transfected conditions recorded at -30 mV holding potential without Cry4
+
+tiled = tiledlayout(4,4,'TileSpacing','compact'); % 4 by 4 plots in one figure 
+nexttile([2,2])  % first figure upper left
+
+for sweep = 1:17
+    plot(t,KCNB1_recordings_filtered(:,1,sweep),'k') % KCNB1 transfection
+    
+    % axes settings
+    ylim([-100 400])
+    yticks([0 200 400])
+    hold on
+    xlabel('Time [ms]','FontSize',14)
+    ylabel('Current [pA]')
+    box off
+    ax = gca;
+    ax.FontSize = 14; 
+    ax.LineWidth= 1; % change to the desired value     
+    ax.TitleHorizontalAlignment = 'left'; % Figure title left orientated
+    ax.TickLength = [0.025, 0.025];
+    title('{\fontsize{20}A} - Kv2.1')
+end
+
+nexttile([2,2])  % second plot upper right
+for sweep = 1:17
+    plot(t_2,KCNV2_recordings_filtered(:,1,sweep),'k') % KCNV2 transfection
+    hold on
+    
+    % axes settings
+    xlabel('Time [ms]','FontSize',14)
+    ylim([-100 400])
+    yticks([0 200 400])
+    box off
+    ax = gca;
+    ax.FontSize = 14; 
+    ax.LineWidth= 1; %change to the desired value     
+    ax.TitleHorizontalAlignment = 'left';  % Figure title left orientated
+    ax.TickLength = [0.025, 0.025];
+    title('{\fontsize{20}B} - Kv8.2')
+end
+
+hold off
+nexttile(10,[2 2]) % third plot lower left
+for sweep = 1:17
+    plot(t_2,KCNB1_KCNV2_recordings_filtered(:,1,sweep),'k') % KCNB1/KCNV2 transfection
+    hold on
+
+    % axes settings
+    ylim([-100 400])
+    yticks([0 200 400])
+    xlabel('Time [ms]','FontSize',14)
+    ylabel('Current [pA]','FontSize',14)
+    box off
+    ax = gca;
+    ax.FontSize = 14; 
+    ax.LineWidth= 1; %change to the desired value     
+    ax.TitleHorizontalAlignment = 'left';  % Figure title left orientated
+    ax.TickLength = [0.025, 0.025];
+
+    title('{\fontsize{20}C} - Kv2.1/Kv8.2')
+
+end
+hold off
+
+
+% save:
+ % exportgraphics(tiled,'A3_transfected_no_cry4.pdf','ContentType','vector')
+
 %% Examplarly raw currents from all transfected conditions recorded at -80 mV holding potential
 
 figure
@@ -685,6 +970,8 @@ text(14.75,47,'p =  0.869','HorizontalAlignment','center','FontSize',15)
 % save:
 % ax = gca;
 % exportgraphics(ax,'correlation.pdf','ContentType','vector')
+
+
 
 
 %% example of how to save

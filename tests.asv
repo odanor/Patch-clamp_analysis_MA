@@ -110,6 +110,7 @@ test_groups = [repmat("KCNB1",1,5),repmat("KCNB1_KCNV2",1,6), ...
 
 
 
+
 %% Post-hoc ranksum tests with alpha Bonferroni corretion with Cry4
 
 alpha = 0.05; % set alpha border
@@ -136,14 +137,6 @@ for i=1:length(groups)
         end
     end
 end
-
-
-%%
-
-
-[p,h,stats]=ranksum(CRY4_V50,KCNB1_KCNV2_V50,'method','approximate');
-effect_size = stats.zval/sqrt(16);
-
 
 
 %% Kruskal-wallis test of the slope values of all conditions recorded at -30 mV holding potential without Cry4
@@ -253,48 +246,6 @@ for i=1:length(groups)
         end
     end
 end
-
-
-%% Post-hoc tests for tau fast (tau2) Kv8.2 and Kv2.1/Kv8.2/Cry4 without outlier of Cry4
-
-
-tau2 = cell2mat([CRY4_A3_struct.exponential_fit_values(5,[1:2,4:end])'; ...
-    KCNV2_A3_struct.exponential_fit_values(5,:)']); % tau fast
-
-
-% create test groups
-test_groups = [repmat("CRY4",1,9),repmat("KCNV2",1,4)];
-
-alpha = 0.05;  % set alpha border
-groups = unique(test_groups);  % exclude repitions of vector
-p_vals = zeros(length(groups)); %create vector for p-values
-test_counter = 0;
-
-
-% Perform pair-wise Wilcoxon rank sum tests
-for i=1:length(groups)
-    for j=i+1:length(groups)
-        indexi = test_groups == groups(i);
-        indexj = test_groups == groups(j);
-        p_vals(i,j) = ranksum(tau2(indexi),tau2(indexj));
-        test_counter = test_counter + 1;
-    end
-end
-
-% Check which groups significantly differ and print info to command window
-for i=1:length(groups)
-    for j=i+1:length(groups)
-        if p_vals(i,j) < (alpha/test_counter)
-            sprintf("Significant difference between groups: %s and %s (%0.5f)", ...
-                groups(i), groups(j), p_vals(i,j))
-        end
-    end
-end
-
-[p,h,stats]=ranksum(tau2(indexi),tau2(indexj),'method','approximate');
-effect_size = stats.zval/sqrt(13);
-
-
 
 %% Without outlier
 
@@ -469,6 +420,9 @@ CRY4_slope_IK = cell2mat(CRY4_C5_struct_mean.IV_fits(6,1:length(CRY4_C5_struct_m
 
 
 
+
+
+
 KCNB1_slope_IA = KCNB1_slope_IA'; KCNV2_slope_IA = KCNV2_slope_IA'; KCNB1_KCNV2_slope_IA = KCNB1_KCNV2_slope_IA';
 CRY4_slope_IA = CRY4_slope_IA'; C5_slope_IA = C5_slope_IA';
 
@@ -479,7 +433,7 @@ CRY4_slope_IK = CRY4_slope_IK'; C5_slope_IK = C5_slope_IK';
 % put all variables into one vector to test
 IA_test = [KCNB1_slope_IA;KCNV2_slope_IA;KCNB1_KCNV2_slope_IA;CRY4_slope_IA;C5_slope_IA];
 
-IK_test = [KCNB1_slope_IK;KCNV2_slope_IK;KCNB1_KCNV2_slope_IK;CRY4_slope_IK;C5_slope_IK];
+IK_test = [KCNB1_V50_IK;KCNV2_V50_IK;KCNB1_KCNV2_V50_IK;CRY4_V50_IK;C5_V50_IK];
 
 % create test groups
 test_groups = [repmat("KCNB1",1,7),repmat("KCNV2",1,4),...

@@ -78,6 +78,13 @@ function transparent_errorbar_fig(cells,Cell_color_code,Cell_color_code_transpar
         y_per_cells = table2array(cells);
 
         cell_quantiles = quantile(y_per_cells,[0.25 0.5 0.75]); % calculate 25%, 50% (median) and 75% IQR
+        
+        quantile_difference = cell_quantiles(1,3) - cell_quantiles(1,1);
+        
+        upper_outlier_threshold = cell_quantiles(1,3) + (1.5 * quantile_difference);
+        lower_outlier_threshold = cell_quantiles(1,1) - (1.5 * quantile_difference);
+        
+ 
         % x axis
         x_for_cell = zeros(1, length(y_per_cells)); x_for_cell(:) = num_cond;
         
@@ -88,13 +95,27 @@ function transparent_errorbar_fig(cells,Cell_color_code,Cell_color_code_transpar
         % plot trasparent line beind dots 
         plot(cells_x2,cells_y,'LineWidth',4,'Color',Cell_color_code_transparent,'HandleVisibility','off');
        
-        % Plot the data points either with or without HandleVisibility in
-        % legend
-        if handle_visibility_dots == 0
-            plot(x_for_cell,y_per_cells,'.','Color',Cell_color_code,'MarkerSize',14,'HandleVisibility','off')
-        elseif handle_visibility_dots == 1
-            plot(x_for_cell,y_per_cells,'.','Color',Cell_color_code,'MarkerSize',14)
+        for i = 1:length(y_per_cells)
+            if y_per_cells(i) > upper_outlier_threshold == 1|| y_per_cells(i) < lower_outlier_threshold == 1
+                
+                % Plot the data points either with or without HandleVisibility in
+                % legend
+                if handle_visibility_dots == 0
+                    plot(x_for_cell,y_per_cells(i),'^','Color',Cell_color_code,'MarkerSize',10,'HandleVisibility','off','LineWidth',2)
+                elseif handle_visibility_dots == 1
+                    plot(x_for_cell,y_per_cells(i),'^','Color',Cell_color_code,'MarkerSize',10,'LineWidth',1)
+                end
 
+            else
+
+                % Plot the data points either with or without HandleVisibility in
+                % legend
+                if handle_visibility_dots == 0
+                    plot(x_for_cell,y_per_cells(i),'.','Color',Cell_color_code,'MarkerSize',14,'HandleVisibility','off')
+                elseif handle_visibility_dots == 1
+                    plot(x_for_cell,y_per_cells(i),'.','Color',Cell_color_code,'MarkerSize',14)
+                end
+            end
         end
 
         % Plot mean of all data in black either with or without HandleVisibility in
