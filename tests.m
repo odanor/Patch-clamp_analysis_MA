@@ -29,6 +29,8 @@
 %                                         A3_pretest_struct.mat
 
 %% V50
+% Take out data to test from the structures
+
 KCNB1_V50 = cell2mat(KCNB1_A3_struct.IV_fits(5,1:length(KCNB1_A3_struct.IV_fits)-2));
 KCNV2_V50 = cell2mat(KCNV2_A3_struct.IV_fits(5,1:length(KCNV2_A3_struct.IV_fits)-2));
 A3_V50 = cell2mat(A3_pretest_struct_mean.IV_fits(5,1:length(A3_pretest_struct_mean.IV_fits)-2));
@@ -36,6 +38,8 @@ KCNB1_KCNV2_V50 = cell2mat(KCNB1_KCNV2_A3_struct.IV_fits(5,1:length(KCNB1_KCNV2_
 CRY4_V50 = cell2mat(CRY4_A3_struct.IV_fits(5,1:length(CRY4_A3_struct.IV_fits)-2));
 
 %% slope
+% Take out data to test from the structures
+
 KCNB1_slope = cell2mat(KCNB1_A3_struct.IV_fits(6,1:length(KCNB1_A3_struct.IV_fits)-2));
 KCNV2_slope = cell2mat(KCNV2_A3_struct.IV_fits(6,1:length(KCNV2_A3_struct.IV_fits)-2));
 A3_slope = cell2mat(A3_pretest_struct_mean.IV_fits(6,1:length(A3_pretest_struct_mean.IV_fits)-2));
@@ -86,10 +90,12 @@ for i=1:length(groups)
     end
 end
 
+% get Bonferroni corrected alpha level
+new_alpha = (alpha/test_counter_noo);
 
 %% Kruskal-wallis test of V50 values of all conditions recorded at -30 mV holding potential with Cry4
 
-% put values into variables
+% turn around the vectors to get columnvector
 KCNB1_V50 = KCNB1_V50'; KCNB1_KCNV2_V50 = KCNB1_KCNV2_V50'; CRY4_V50 = CRY4_V50';
 KCNV2_V50 = KCNV2_V50'; A3_V50 = A3_V50';
 
@@ -107,7 +113,6 @@ test_groups = [repmat("KCNB1",1,5),repmat("KCNB1_KCNV2",1,6), ...
 
 %test 
 [p,idk,stats] = kruskalwallis(V50_test,test_groups);
-
 
 
 %% Post-hoc ranksum tests with alpha Bonferroni corretion with Cry4
@@ -137,8 +142,10 @@ for i=1:length(groups)
     end
 end
 
+% get Bonferroni corrected alpha level
+new_alpha = (alpha/test_counter_noo);
 
-%%
+%% test Effectsize of the found significant difference
 
 
 [p,h,stats]=ranksum(CRY4_V50,KCNB1_KCNV2_V50,'method','approximate');
@@ -148,7 +155,7 @@ effect_size = stats.zval/sqrt(16);
 
 %% Kruskal-wallis test of the slope values of all conditions recorded at -30 mV holding potential without Cry4
 
-% put values into variables
+% turn around the vectors to get columnvector
 KCNB1_slope = KCNB1_slope'; KCNB1_KCNV2_slope = KCNB1_KCNV2_slope';
 KCNV2_slope = KCNV2_slope'; A3_slope = A3_slope';
 
@@ -163,7 +170,7 @@ test_groups = [repmat("KCNB1",1,5),repmat("KCNB1_KCNV2",1,6),repmat("KCNV2",1,4)
 
 %% Kruskal-wallis test of the slope values of all conditions recorded at -30 mV holding potential
 
-% put values into variables
+% turn around the vectors to get columnvector
 KCNB1_slope = KCNB1_slope'; KCNB1_KCNV2_slope = KCNB1_KCNV2_slope'; CRY4_slope= CRY4_slope';
 KCNV2_slope = KCNV2_slope'; A3_slope = A3_slope';
 
@@ -178,14 +185,11 @@ test_groups = [repmat("KCNB1",1,5),repmat("KCNB1_KCNV2",1,6), ...
 [p_slope,idk_slope,stats_slope] = kruskalwallis(slope_test,test_groups);
 
 
-
-
-
 %% Kruskal-wallis test of the tau values of all conditions recorded at -30 mV holding potential without Cry4
 % at a voltage change of +30 mV 
 
 
-% put values into variables
+% put values into variables from struct
 tau1 = cell2mat([KCNV2_A3_struct.exponential_fit_values(4,:)'; ...
     KCNB1_A3_struct.exponential_fit_values(4,:)'; ...
     KCNB1_KCNV2_A3_struct.exponential_fit_values(4,:)']); % tau slow
@@ -207,7 +211,7 @@ test_groups = [repmat("KCNV2",1,4), ...
 % at a voltage change of +30 mV 
 
 
-% put values into variables
+% put values into variables from struct 
 tau1 = cell2mat([CRY4_A3_struct.exponential_fit_values(4,:)'; ...
     KCNV2_A3_struct.exponential_fit_values(4,:)'; ...
     KCNB1_A3_struct.exponential_fit_values(4,:)'; ...
@@ -254,6 +258,8 @@ for i=1:length(groups)
     end
 end
 
+% get Bonferroni corrected alpha level
+new_alpha = (alpha/test_counter_noo);
 
 %% Post-hoc tests for tau fast (tau2) Kv8.2 and Kv2.1/Kv8.2/Cry4 without outlier of Cry4
 
@@ -291,9 +297,12 @@ for i=1:length(groups)
     end
 end
 
+% get Bonferroni corrected alpha level
+new_alpha = (alpha/test_counter_noo);
+
+% check effect size
 [p,h,stats]=ranksum(tau2(indexi),tau2(indexj),'method','approximate');
 effect_size = stats.zval/sqrt(13);
-
 
 
 %% Without outlier
@@ -304,7 +313,7 @@ test_groups_noo = test_groups([1:2,4:end]);
 [p_tau_2_noo,idk_tau_2_noo,stats_tau_2_noo] = ...
     kruskalwallis(tau2_noo,test_groups_noo);
 
-%% Post-hoc tests witout outlier
+%% Post-hoc tests witout outlier with Bonferroni corrected alpha level
 
 alpha = 0.05;
 groups_noo = unique(test_groups_noo);
@@ -331,11 +340,13 @@ for i=1:length(groups_noo)
     end
 end
 
+% get Bonferroni corrected alpha level
+new_alpha = (alpha/test_counter_noo);
 
 %% Kruskal-wallis test of the current amplitude of all conditions recorded at -30 mV holding potential 
 % without Cry4
 
-% put values into variables
+% get the amplitude values from each struct
 KCNB1_amp_30 = table2array(KCNB1_A3_struct.mean_currents_normalized(14,:));  
 KCNV2_amp_30 = table2array(KCNV2_A3_struct.mean_currents_normalized(14,:));  
 KCNB1_KCNV2_amp_30 = table2array(KCNB1_KCNV2_A3_struct.mean_currents_normalized(14,:));  
@@ -355,7 +366,7 @@ test_groups = [repmat("KCNV2",1,4), ...
 %% Kruskal-wallis test of the current amplitude of all conditions recorded at -30 mV holding potential
 % with Cry4
 
-% put values into variables
+% get the amplitude values from each struct
 KCNB1_amp_30 = table2array(KCNB1_A3_struct.mean_currents_normalized(14,:));  
 KCNV2_amp_30 = table2array(KCNV2_A3_struct.mean_currents_normalized(14,:));  
 KCNB1_KCNV2_amp_30 = table2array(KCNB1_KCNV2_A3_struct.mean_currents_normalized(14,:));  
@@ -376,7 +387,8 @@ test_groups = [repmat("CRY4",1,10),repmat("KCNV2",1,4), ...
 
 
 %% -80 mV current amplitude
-% put values into variables
+
+% get the amplitude values at +30 mV voltage change
 KCNB1_amp_30_IA = table2array(KCNB1_C5_struct_peak.A_peak_front_normalized(14,:));  
 KCNV2_amp_30_IA = table2array(KCNV2_C5_struct_peak.A_peak_front_normalized(14,:));  
 KCNB1_KCNV2_amp_30_IA = table2array(KCNB1_KCNV2_C5_struct_peak.A_peak_front_normalized(14,:));  
@@ -384,14 +396,14 @@ CRY4_amp_30_IA = table2array(CRY4_C5_struct_peak.A_peak_front_normalized(14,:));
 pretest_amp_30_IA = table2array(C5_pretest_struct_peak.A_peak_front_normalized(14,:));  
 
 
-% put values into variables
+% get the amplitude values at +30 mV voltage change
 KCNB1_amp_30_IK = table2array(KCNB1_C5_struct_mean.mean_currents_normalized(14,:));  
 KCNV2_amp_30_IK = table2array(KCNV2_C5_struct_mean.mean_currents_normalized(14,:));  
 KCNB1_KCNV2_amp_30_IK = table2array(KCNB1_KCNV2_C5_struct_mean.mean_currents_normalized(14,:));  
 CRY4_amp_30_IK = table2array(CRY4_C5_struct_mean.mean_currents_normalized(14,:));  
 pretest_amp_30_IK = table2array(C5_pretest_struct_mean.mean_currents_normalized(14,:));  
 
-
+% turn around the vectors to get columnvector
 KCNB1_amp_30_IA = KCNB1_amp_30_IA'; KCNV2_amp_30_IA = KCNV2_amp_30_IA'; KCNB1_KCNV2_amp_30_IA = KCNB1_KCNV2_amp_30_IA';
 CRY4_amp_30_IA = CRY4_amp_30_IA'; pretest_amp_30_IA = pretest_amp_30_IA';
 
@@ -415,13 +427,14 @@ test_groups = [repmat("KCNB1",1,7),repmat("KCNV2",1,4),repmat("KCNV2_KCNB1",1,4)
 
 %% -80 mV V50
 
+% get the V50 values from each struct
 KCNB1_V50_IA = cell2mat(KCNB1_C5_struct_peak.IV_fits(5,1:length(KCNB1_C5_struct_peak.IV_fits)-2));
 KCNV2_V50_IA = cell2mat(KCNV2_C5_struct_peak.IV_fits(5,1:length(KCNV2_C5_struct_peak.IV_fits)-2));
 C5_V50_IA = cell2mat(C5_pretest_struct_peak.IV_fits(5,1:length(C5_pretest_struct_peak.IV_fits)-2));
 KCNB1_KCNV2_V50_IA = cell2mat(KCNB1_KCNV2_C5_struct_peak.IV_fits(5,1:length(KCNB1_KCNV2_C5_struct_peak.IV_fits)-2));
 CRY4_V50_IA = cell2mat(CRY4_C5_struct_peak.IV_fits(5,1:length(CRY4_C5_struct_peak.IV_fits)-2));
 
-
+% get the V50 values from each struct
 KCNB1_V50_IK = cell2mat(KCNB1_C5_struct_mean.IV_fits(5,1:length(KCNB1_C5_struct_mean.IV_fits)-2));
 KCNV2_V50_IK = cell2mat(KCNV2_C5_struct_mean.IV_fits(5,1:length(KCNV2_C5_struct_mean.IV_fits)-2));
 C5_V50_IK = cell2mat(C5_pretest_struct_mean.IV_fits(5,1:length(C5_pretest_struct_mean.IV_fits)-2));
@@ -429,7 +442,7 @@ KCNB1_KCNV2_V50_IK = cell2mat(KCNB1_KCNV2_C5_struct_mean.IV_fits(5,1:length(KCNB
 CRY4_V50_IK = cell2mat(CRY4_C5_struct_mean.IV_fits(5,1:length(CRY4_C5_struct_mean.IV_fits)-2));
 
 
-
+% change the vector diretion
 KCNB1_V50_IA = KCNB1_V50_IA'; KCNV2_V50_IA = KCNV2_V50_IA'; KCNB1_KCNV2_V50_IA = KCNB1_KCNV2_V50_IA';
 CRY4_V50_IA = CRY4_V50_IA'; C5_V50_IA = C5_V50_IA';
 
@@ -454,13 +467,14 @@ test_groups = [repmat("KCNB1",1,7),repmat("KCNV2",1,4),...
 
 %% -80 mV slope
 
+% get the Vc values from each struct
 KCNB1_slope_IA = cell2mat(KCNB1_C5_struct_peak.IV_fits(6,1:length(KCNB1_C5_struct_peak.IV_fits)-2));
 KCNV2_slope_IA = cell2mat(KCNV2_C5_struct_peak.IV_fits(6,1:length(KCNV2_C5_struct_peak.IV_fits)-2));
 C5_slope_IA = cell2mat(C5_pretest_struct_peak.IV_fits(6,1:length(C5_pretest_struct_peak.IV_fits)-2));
 KCNB1_KCNV2_slope_IA = cell2mat(KCNB1_KCNV2_C5_struct_peak.IV_fits(6,1:length(KCNB1_KCNV2_C5_struct_peak.IV_fits)-2));
 CRY4_slope_IA = cell2mat(CRY4_C5_struct_peak.IV_fits(6,1:length(CRY4_C5_struct_peak.IV_fits)-2));
 
-
+% get the Vc values from each struct
 KCNB1_slope_IK = cell2mat(KCNB1_C5_struct_mean.IV_fits(6,1:length(KCNB1_C5_struct_mean.IV_fits)-2));
 KCNV2_slope_IK = cell2mat(KCNV2_C5_struct_mean.IV_fits(6,1:length(KCNV2_C5_struct_mean.IV_fits)-2));
 C5_slope_IK = cell2mat(C5_pretest_struct_mean.IV_fits(6,1:length(C5_pretest_struct_mean.IV_fits)-2));
@@ -468,7 +482,7 @@ KCNB1_KCNV2_slope_IK = cell2mat(KCNB1_KCNV2_C5_struct_mean.IV_fits(6,1:length(KC
 CRY4_slope_IK = cell2mat(CRY4_C5_struct_mean.IV_fits(6,1:length(CRY4_C5_struct_mean.IV_fits)-2));
 
 
-
+% change the vector diretion
 KCNB1_slope_IA = KCNB1_slope_IA'; KCNV2_slope_IA = KCNV2_slope_IA'; KCNB1_KCNV2_slope_IA = KCNB1_KCNV2_slope_IA';
 CRY4_slope_IA = CRY4_slope_IA'; C5_slope_IA = C5_slope_IA';
 
